@@ -1,0 +1,265 @@
+<odoo>
+    <data>
+        <record id="view_rfid_form" model="ir.ui.view">
+            <field name="name">view_rfid_form</field>
+            <field name="model">rfid.ser</field>
+            <field name="arch" type="xml">
+                <form string="RFID Serials" edit="false" create="false">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="lot_serial_no"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                                <field name="name"/>
+                                <field name="status"/>
+                            </group>
+                            <group>
+                                <field name="default_code"/>
+                                <field name="barcode"/>
+                                <field name="print_status"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_rfid_tree" model="ir.ui.view">
+            <field name="name">view_rfid_tree</field>
+            <field name="model">rfid.ser</field>
+            <field name="arch" type="xml">
+                <tree string="RFID Serials" create="false" edit="false">
+                    <field name="product_id"/>
+                    <field name="name"/>
+                    <field name="lot_serial_no"/>
+                    <field name="default_code"/>
+                    <field name="barcode"/>
+                    <field name="status"/>
+                    <field name="print_status"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_rfid_view" model="ir.actions.act_window">
+            <field name="name">RFID Serials</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rfid.ser</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+
+                </p>
+                <p>
+
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem id="menu_rfid_view" name="RFID Serials" parent="stock.menu_stock_inventory_control"
+                  action="action_rfid_view" sequence="20"/>
+
+        <record id="res_config_settings_view_form_stock" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.product.expiry.stock</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='warehouse_setting_container']" position="after">
+                    <h2 class="mt32">Server Side URL</h2>
+                    <div class="row mt16 o_settings_container" name="warehouse_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box"
+                             title="Store products in specific locations of your warehouse (e.g. bins, racks) and to track inventory accordingly.">
+                            <div>
+                                <label for="server_side_url"/>
+                                <field name="server_side_url"/>
+                                <p>For example http://0.0.0.0:8069</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="mt32">Print Data</h2>
+                    <div class="row mt16 o_settings_container" name="warehouse_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box"
+                             title="Store products in specific locations of your warehouse (e.g. bins, racks) and to track inventory accordingly.">
+                            <div>
+                                <label for="template_name"/>
+                                <field name="template_name"/>
+                            </div>
+                            <div>
+                                <label for="print_qty"/>
+                                <field name="print_qty"/>
+                            </div>
+                            <div>
+                                <label for="printer_name"/>
+                                <field name="printer_name"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="view_stock_move_operations" model="ir.ui.view">
+            <field name="name">stock.move.operations.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_stock_move_operations"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_assign_serial_show_details']" position="after">
+                    <button name="import_rfid" type="object" class="btn-link" title="import rfid">
+                        <span>import rfid</span>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+        <record id="id_print_ser_form" model="ir.ui.view">
+            <field name="name">print ser</field>
+            <field name="model">print.ser</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="template_name"/>
+                                <field name="print_qty"/>
+                            </group>
+                            <group>
+                                <field name="printer_name"/>
+                                <field name="txt_file" invisible="1" />
+                            </group>
+                            <field name="ser_ids">
+                                <tree>
+                                    <field name="lot_serial_no"/>
+                                    <field name="product_id"/>
+                                    <field name="default_code"/>
+                                    <field name="barcode"/>
+                                    <field name="print_status"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="print_text" class="btn-primary" string="Print" type="object"/>
+                        OR
+                        <button class="btn-primary" string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="id_print_ser_act" model="ir.actions.act_window">
+            <field name="name">print ser</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">print.ser</field>
+            <field name="view_mode">form</field>
+          <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="UNIQUE_id_print_ser" name="Print SER" parent="stock.menu_warehouse_report"
+                  action="id_print_ser_act" sequence="10"/>
+
+        <record id="view_location_form" model="ir.ui.view">
+            <field name="name">stock.location.form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form" />
+            <field name="arch" type="xml">
+                <field name="usage" position="before">
+                    <field name="path_file" />
+                </field>
+            </field>
+        </record>
+
+        <record id="id_rfid_pos_check_list_tree" model="ir.ui.view">
+            <field name="name">Rfid Pos Check List tree</field>
+            <field name="model">rfid.pos.check.list</field>
+            <field name="arch" type="xml">
+                <tree string="Rfid Pos Check List Tree">
+                    <field name="state"/>
+                    <field name="IDS"/>
+                    <field name="DeviceID"/>
+                    <field name="DeviceSerialNumber"/>
+                    <field name="TagState"/>
+                    <field name="EPC"/>
+                    <field name="DeactvatedEPC"/>
+                    <field name="ReactvatedEPC"/>
+                    <field name="TID"/>
+                    <field name="DataSource"/>
+                    <field name="DecodedData"/>
+                    <field name="TagSerialNumber"/>
+                    <field name="DateTime"/>
+                    <field name="session_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="id_rfid_pos_check_list_form" model="ir.ui.view">
+            <field name="name">Rfid Pos Check List form</field>
+            <field name="model">rfid.pos.check.list</field>
+            <field name="arch" type="xml">
+                <form string="Rfid Pos Check List Form">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sold,not_sold,returned,not_found"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field readonly="1" name="IDS"/>
+                                <field readonly="1" name="DeviceID"/>
+                                <field readonly="1" name="DeviceSerialNumber"/>
+                                <field readonly="1" name="TagState"/>
+                                <field readonly="1" name="EPC"/>
+                                <field readonly="1" name="DeactvatedEPC"/>
+                                <field readonly="1" name="ReactvatedEPC"/>
+                            </group>
+                            <group>
+                                <field readonly="1" name="TID"/>
+                                <field readonly="1" name="DataSource"/>
+                                <field readonly="1" name="DecodedData"/>
+                                <field readonly="1" name="TagSerialNumber"/>
+                                <field readonly="1" name="DateTime"/>
+                                <field readonly="1" name="session_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="id_rfid_pos_check_list_search" model="ir.ui.view">
+            <field name="name">Rfid Pos Check List search</field>
+            <field name="model">rfid.pos.check.list</field>
+            <field name="arch" type="xml">
+                <search string="Rfid Pos Check List Search">
+                    <field name="DeviceSerialNumber"/>
+                    <filter string="Not Found" name="state" domain="[('state','=','not_found')]"/>
+                </search>
+            </field>
+        </record>
+        <record id="id_rfid_pos_check_list_action" model="ir.actions.act_window">
+            <field name="name">Rfid Pos Check List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">rfid.pos.check.list</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="id_rfid_pos_check_list_menu" name="Rfid Pos Check List" parent="point_of_sale.menu_point_config_product"
+                  action="id_rfid_pos_check_list_action"
+                  sequence="1"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,92 @@
+<odoo>
+    <template id="assets_backend_inherit" name="Product Configurator Assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/rfid_client_side/static/src/js/list_widgets.js"/>
+        </xpath>
+    </template>
+    <template id="assets_tests" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/rfid_client_side/static/src/js/buttons.js"/>
+            <script type="text/javascript" src="/rfid_client_side/static/src/js/PaymentScreen.js"/>
+            <script type="text/javascript" src="/rfid_client_side/static/src/js/Order.js"/>
+        </xpath>
+    </template>
+
+    <record id="pos_config_rfid_inherit_form" model="ir.ui.view">
+        <field name="name">pos_config_rfid_inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='company']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="pos_journal_id">
+                    <div class="o_setting_right_pane">
+                        <label for="DeviceSerialNumberSale"/>
+                        <field name="DeviceSerialNumberSale" nolabel="1"/>
+                        <label for="DeviceSerialNumberReturn"/>
+                        <field name="DeviceSerialNumberReturn" nolabel="1"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="id_items_added_inventory_form" model="ir.ui.view">
+        <field name="name">items.added.inventory form</field>
+        <field name="model">items.added.inventory</field>
+        <field name="arch" type="xml">
+            <form string="" edit="false" create="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="lot_name"/>
+                            <field name="inventory_adjustments_id"/>
+                        </group>
+                        <group>
+                            <field name="location_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="id_items_added_inventory_tree" model="ir.ui.view">
+        <field name="name">items_added_inventory tree</field>
+        <field name="model">items.added.inventory</field>
+        <field name="arch" type="xml">
+            <tree string="" edit="false" create="false">
+                <field name="lot_name"/>
+                <field name="inventory_adjustments_id"/>
+                <field name="location_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="id_items_added_inventory_search" model="ir.ui.view">
+        <field name="name">items.added.inventory search</field>
+        <field name="model">items.added.inventory</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="inventory_adjustments_id"/>
+                <field name="lot_name"/>
+                <field name="location_id"/>
+                <filter string="Inventory Adjustments" name="groupby_inventory_adjustments" domain="[]"
+                        context="{'group_by': 'inventory_adjustments_id'}"/>
+            </search>
+        </field>
+    </record>
+    <record id="id_items_added_inventory_act" model="ir.actions.act_window">
+        <field name="name">Items not added to the inventory due to unavailability</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">items.added.inventory</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_groupby_inventory_adjustments": 1,}
+        </field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+            <p>
+            </p>
+        </field>
+    </record>
+    <menuitem id="UNIQUE_id_items_added_inventory" parent="stock.menu_stock_config_settings"
+              action="id_items_added_inventory_act" sequence="10"/>
+
+</odoo>

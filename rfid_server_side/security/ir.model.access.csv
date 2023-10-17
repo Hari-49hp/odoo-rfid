@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rfid_ser_generate,access_rfid_ser_generate,model_rfid_ser_generate,base.group_user,1,1,1,1
+access_rfid_ser_id,access_rfid_ser_name,model_rfid_ser,base.group_user,1,1,1,1
+access_rfid_tagsinfo,access_rfid_tagsinfo,model_rfid_tagsinfo,base.group_user,1,1,1,1
+access_tags_adjust,access_tags_adjust,model_tags_adjust,base.group_user,1,1,0,1
+

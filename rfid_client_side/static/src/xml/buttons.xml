@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="rfid_sales_button" owl="1">
+        <div class="control-button" t-att-class="{ highlight: isHighlighted }">
+            <div class="se-pre-con"><p class="oe_hidden" style="font-weight:bolder;margin: 29%;color: black;">Please Wait..</p></div>
+            <i class="fa fa-bolt"/>
+            <span>Rfid Sales</span>
+            <span></span>
+        </div>
+    </t>
+    <t t-name="rfid_return_button" owl="1">
+        <div class="control-button" t-att-class="{ highlight: isHighlighted }">
+            <div class="se-pre-con"><p class="oe_hidden" style="font-weight:bolder;margin: 29%;color: black;">Please Wait..</p></div>
+            <i class="fa fa-bolt"/>
+            <span>Rfid Return</span>
+        </div>
+    </t>
+
+</templates>

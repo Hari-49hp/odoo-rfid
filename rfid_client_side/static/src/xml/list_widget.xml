@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-extend="ListView.buttons">
+            <t t-jquery="button.o_list_button_add" t-operation="after">
+                <button type="button" class="btn btn-primary o_list_button_add_custom" style="display: none;">
+                    Import Rfid
+                </button>
+                <button type="button" class="btn btn-primary o_list_button_add_custom1" style="display: none;">
+                    Import Rfid Adjustments
+                </button>
+                <button type="button" class="btn btn-primary o_list_button_add_custom_delete" style="display: none;">
+                    Delete Import Data
+                </button>
+            </t>
+    </t>
+</templates>
