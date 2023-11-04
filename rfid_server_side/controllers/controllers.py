@@ -14,6 +14,12 @@ HEADERS = {'Content-Type': 'application/json'}
 
 class rfid(http.Controller):
 
+    @http.route('/api/remove_tags_info_serverside_pos', type='json', methods=['POST'], auth='public', cors="*", csrf=False)
+    def api_remove_tags_info_serverside_pos(self, orderDetails=None):
+        for tag in orderDetails["lotNumbers"]:
+            tags = request.env['rfid.tagsinfo'].sudo().search([('EPC', '=', tag)])
+            tags.sudo().update({'active': True})
+
     @http.route('/api/create/rfid_ser', type='json', methods=['POST'], auth='public', sitemap=False)
     def create_rfid_ser(self, **kw):
         _logger.info("000000000000000000000000 %s ", kw.get('default_code',False))
@@ -191,10 +197,3 @@ class rfid(http.Controller):
         })
         lot_names = lots.mapped('EPC')
         return lot_names
-
-    @http.route('/api/remove_tags_info_serverside_pos', type='http', methods=['POST'], auth='public', sitemap=False)
-    def remove_tags_info_serverside_pos(self, orderDetails=None):
-        for tag in orderDetails["lotNumbers"]:
-            tags = request.env['rfid.tagsinfo'].sudo().search([('EPC', '=', tag)])
-            tags.sudo().update({'active': True})
-
