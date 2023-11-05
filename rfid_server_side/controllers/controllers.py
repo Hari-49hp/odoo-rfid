@@ -199,7 +199,8 @@ class rfid(http.Controller):
 
     @http.route('/api/remove_tags_info_serverside_new', type='http', methods=['POST'], auth='public', cors="*", sitemap=False)
     def remove_tags_info_serverside_new(self, tags=None):
-        for tag in tags["lotNumbers"]:
+        print("tagsssssssssssssssssssssssss", tags)
+        for tag in tags:
             tagdd = request.env['rfid.tagsinfo'].sudo().search([('EPC', '=', tag)])
             tagdd.sudo().update({'active': False})
         return True
